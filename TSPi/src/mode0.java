@@ -45,7 +45,7 @@ public class mode0 {
 
 			while(generateParent){
 
-				parent = this.randomChar(availableChar);
+				parent = this.randomChar(availableChar).get(1).charAt(0);
 				if(excludeParent.size()!=0){
 
 					boolean noSameParent = true;
@@ -75,7 +75,7 @@ public class mode0 {
 
 				while(generateChild){
 
-					child = this.randomChar(availableChar);
+					child = this.randomChar(availableChar).get(1).charAt(0);
 
 					if(parent!=child){
 
