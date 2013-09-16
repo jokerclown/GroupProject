@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -145,9 +147,50 @@ public class mode0 {
 
 		return result;
 	}
+	
+	public void generateText(ArrayList<ArrayList<Object>> inputFPO){
+
+		try{
+
+			FileWriter fstream = new FileWriter("textFile.txt");
+			BufferedWriter out = new BufferedWriter(fstream);
+			String oneLine = "";
+			
+			for(int i = 0; i<inputFPO.size(); i++){
+				
+				ArrayList<Object> focusLine = inputFPO.get(i);
+				
+				oneLine = focusLine.get(0).toString() + ":";
+				
+				ArrayList<Character> focusChild = (ArrayList<Character>) focusLine.get(1);
+				
+				for(int j =0; j<focusChild.size(); j++){
+					oneLine = oneLine + focusChild.get(j);
+					
+					if(j!=inputFPO.size()-1){
+						oneLine = oneLine + ",";
+					}
+				}
+				
+				out.write(oneLine);
+				out.newLine();
+				
+			}
+
+		}catch (Exception e){
+			System.err.println("Error: " + e.getMessage());
+		}
+
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		mode0 test = new mode0();
+		
+		ArrayList<ArrayList<Object>> tes = test.generateFPO(10, 5);
+		test.generateText(tes);
+		System.out.println(tes);
 
 	}
 
