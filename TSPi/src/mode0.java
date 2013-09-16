@@ -28,6 +28,123 @@ public class mode0 {
 
 		return result;
 	}
+	
+	public ArrayList<ArrayList<Object>> generateFPO(int lengthX, int lengthY){
+		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
+		ArrayList<Character> availableChar = this.generateSet();
+		ArrayList<Character> excludeParent = new ArrayList<Character>();
+
+
+		for(int i = 0; i<lengthY; i++){
+
+			ArrayList<Object> lineContainer = new ArrayList<Object>();
+			ArrayList<Character> childContainer = new ArrayList<Character>();
+
+			char parent = Character.UNASSIGNED;
+			boolean generateParent = true;
+
+			while(generateParent){
+
+				parent = this.randomChar(availableChar);
+				if(excludeParent.size()!=0){
+
+					boolean noSameParent = true;
+
+					for(int j = 0; j<excludeParent.size(); j++){
+						if(excludeParent.get(j)==parent){
+							noSameParent = false;
+						}
+					}
+
+					if(noSameParent){
+						generateParent = false;
+					}
+
+				}else{
+					generateParent = false;
+				}
+
+			}
+
+			lineContainer.add(parent);
+
+			for(int j = 0; j<lengthX; j++){
+
+				boolean generateChild = true;
+				char child = Character.UNASSIGNED;
+
+				while(generateChild){
+
+					child = this.randomChar(availableChar);
+
+					if(parent!=child){
+
+						boolean noSameChild = true;
+
+						for(int m = 0; m<childContainer.size();m++){
+
+							if(childContainer.get(m)==child){
+								noSameChild = false;
+							}
+
+						}
+
+						if(noSameChild){
+
+							if (result.size()!=0){
+
+								int indexParent = 0;
+								boolean childIsParent = false;
+
+								for(int k = 0; k<result.size(); k++){
+									if(result.get(k).get(0).toString().charAt(0)==child){
+										childIsParent = true;
+										indexParent = k;
+									}
+								}
+
+								if(childIsParent){
+
+									ArrayList<Character> focusChild = (ArrayList<Character>) result.get(indexParent).get(1);
+									boolean noChildParentDependent = true;
+
+									for(int l = 0; l<focusChild.size(); l++){
+
+										if(focusChild.get(l)==parent){
+											noChildParentDependent = false;
+										}
+
+									}
+
+									if(noChildParentDependent){
+										generateChild = false;
+									}
+
+
+								}else{
+									generateChild = false;
+								}
+
+							}else{
+								generateChild = false;
+							}
+
+						}
+					}
+				}
+
+				childContainer.add(child);
+
+			}
+
+			lineContainer.add(childContainer);
+
+
+			result.add(lineContainer);
+		}
+
+		return result;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
