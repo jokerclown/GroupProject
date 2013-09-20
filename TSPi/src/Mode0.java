@@ -31,16 +31,46 @@ public class Mode0 {
 		return result;
 	}
 	
-	public boolean checkParentExclude(ArrayList<Character> excludeChar, char parent){
+	public boolean checkParentExclude(ArrayList<Character> excludeParent, char parent){
 		boolean result = false;
 		
-		for(int i=0; i<excludeChar.size(); i++){
-			if(excludeChar.get(i)==parent){
+		for(int i=0; i<excludeParent.size(); i++){
+			if(excludeParent.get(i)==parent){
 				result = true;
 				return result;
 			}
 		}
 		
+		return result;
+	}
+	
+	public char generateCharParent(ArrayList<Character> availableChar, ArrayList<Character> excludeParent){
+		char result = Character.UNASSIGNED;
+		boolean generateParent = true;
+		
+		while(generateParent){
+
+			result = this.randomChar(availableChar).get(1).charAt(0);
+			
+			switch(excludeParent.size()){
+			case 0:
+				generateParent = false;
+				break;
+			default:
+				boolean sameParent = this.checkParentExclude(excludeParent, result);
+				if(sameParent == false){
+					generateParent = false;
+				}
+				break;
+			}
+
+		}
+		
+		return result;
+	}
+	
+	public char generateCharChild(){
+		char result = Character.UNASSIGNED;
 		return result;
 	}
 	
@@ -55,31 +85,7 @@ public class Mode0 {
 			ArrayList<Object> lineContainer = new ArrayList<Object>();
 			ArrayList<Character> childContainer = new ArrayList<Character>();
 
-			char parent = Character.UNASSIGNED;
-			boolean generateParent = true;
-
-			while(generateParent){
-
-				parent = this.randomChar(availableChar).get(1).charAt(0);
-				if(excludeParent.size()!=0){
-
-					boolean noSameParent = true;
-
-					for(int j = 0; j<excludeParent.size(); j++){
-						if(excludeParent.get(j)==parent){
-							noSameParent = false;
-						}
-					}
-
-					if(noSameParent){
-						generateParent = false;
-					}
-
-				}else{
-					generateParent = false;
-				}
-
-			}
+			char parent = this.generateCharParent(availableChar, excludeParent);
 
 			lineContainer.add(parent);
 
