@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 
-public class mode0 {
+public class Mode0 {
 	
 	public ArrayList<Character> generateSet(){
 
@@ -28,6 +28,19 @@ public class mode0 {
 		char randomChar = availableChar.get(randomNumber);
 		result.add(Character.toString(randomChar));
 
+		return result;
+	}
+	
+	public boolean checkParentExclude(ArrayList<Character> excludeChar, char parent){
+		boolean result = false;
+		
+		for(int i=0; i<excludeChar.size(); i++){
+			if(excludeChar.get(i)==parent){
+				result = true;
+				return result;
+			}
+		}
+		
 		return result;
 	}
 	
@@ -186,7 +199,7 @@ public class mode0 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		mode0 test = new mode0();
+		Mode0 test = new Mode0();
 		
 		ArrayList<ArrayList<Object>> tes = test.generateFPO(10, 5);
 		test.generateText(tes);
