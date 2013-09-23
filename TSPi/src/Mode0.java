@@ -82,16 +82,16 @@ public class Mode0 {
 
 		return result;
 	}
-	
+
 	public int checkChildIsParent(ArrayList<ArrayList<Object>> resultContainer, char child){
 		int result = 0;
-		
+
 		for(int i = 0; i<resultContainer.size(); i++){
 			if(resultContainer.get(i).get(0).toString().charAt(0)==child){
 				result = i;
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -115,32 +115,40 @@ public class Mode0 {
 
 		return result;
 	}
-	
-	public void removeParentFromChildAvailable(ArrayList<Character> availableChar, char parent){
+
+	public void removeChar(ArrayList<Character> availableChar, char targetChar){
 		for(int i=0; i<availableChar.size(); i++){
-			
-			if(availableChar.get(i)==parent){
+
+			if(availableChar.get(i)==targetChar){
 				availableChar.remove(i);
 			}
-			
+
 		}
 	}
 
-	public char generateCharChild(ArrayList<ArrayList<Object>> resultContainer, ArrayList<Character> childContainer, char child, char parent){
+	public char generateCharChild(ArrayList<ArrayList<Object>> resultContainer, ArrayList<Character> childContainer, char parent){
 		char result = Character.UNASSIGNED;
 		ArrayList<Character> availableChar = this.generateSet();
-		this.removeParentFromChildAvailable(availableChar, parent);
+		this.removeChar(availableChar, parent);
 
 		boolean generateChild = true;
 
 		while(generateChild){
-			
-			result = this.randomChar(availableChar).get(1).charAt(0);
-			
-			boolean sameChild = this.checkSameChild(childContainer, child);
-			boolean ChildParentDependent = this.checkChildParentDependent(resultContainer, child, parent);
-			
-			
+
+			if(availableChar.size()>0){
+				result = this.randomChar(availableChar).get(1).charAt(0);
+				boolean sameChild = this.checkSameChild(childContainer, result);
+				boolean ChildParentDependent = this.checkChildParentDependent(resultContainer, result, parent);
+				
+				if(sameChild || ChildParentDependent){
+					this.removeChar(availableChar, result);
+				}else{
+					generateChild = false;
+				}
+			}else{
+				return Character.UNASSIGNED;
+			}
+
 		}
 
 		return result;
@@ -162,70 +170,8 @@ public class Mode0 {
 			lineContainer.add(parent);
 
 			for(int j = 0; j<lengthX; j++){
-
-				boolean generateChild = true;
-				char child = Character.UNASSIGNED;
-
-				while(generateChild){
-
-					child = this.randomChar(availableChar).get(1).charAt(0);
-
-					if(parent!=child){
-
-						boolean noSameChild = true;
-
-						for(int m = 0; m<childContainer.size();m++){
-
-							if(childContainer.get(m)==child){
-								noSameChild = false;
-							}
-
-						}
-
-						if(noSameChild){
-
-							if (result.size()!=0){
-
-								int indexParent = 0;
-								boolean childIsParent = false;
-
-								for(int k = 0; k<result.size(); k++){
-									if(result.get(k).get(0).toString().charAt(0)==child){
-										childIsParent = true;
-										indexParent = k;
-									}
-								}
-
-								if(childIsParent){
-
-									ArrayList<Character> focusChild = (ArrayList<Character>) result.get(indexParent).get(1);
-									boolean noChildParentDependent = true;
-
-									for(int l = 0; l<focusChild.size(); l++){
-
-										if(focusChild.get(l)==parent){
-											noChildParentDependent = false;
-										}
-
-									}
-
-									if(noChildParentDependent){
-										generateChild = false;
-									}
-
-
-								}else{
-									generateChild = false;
-								}
-
-							}else{
-								generateChild = false;
-							}
-
-						}
-					}
-				}
-
+				
+				char child = this.generateCharChild(result, childContainer, parent);
 				childContainer.add(child);
 
 			}
