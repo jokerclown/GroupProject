@@ -139,7 +139,7 @@ public class Mode0 {
 				result = this.randomChar(availableChar).get(1).charAt(0);
 				boolean sameChild = this.checkSameChild(childContainer, result);
 				boolean ChildParentDependent = this.checkChildParentDependent(resultContainer, result, parent);
-				
+
 				if(sameChild || ChildParentDependent){
 					this.removeChar(availableChar, result);
 				}else{
@@ -170,7 +170,7 @@ public class Mode0 {
 			lineContainer.add(parent);
 
 			for(int j = 0; j<lengthX; j++){
-				
+
 				char child = this.generateCharChild(result, childContainer, parent);
 				childContainer.add(child);
 
@@ -204,7 +204,7 @@ public class Mode0 {
 				for(int j =0; j<focusChild.size(); j++){
 					oneLine = oneLine + focusChild.get(j);
 
-					if(j!=inputFPO.size()-1){
+					if(j!=focusChild.size()-1){
 						oneLine = oneLine + ",";
 					}
 				}
@@ -213,6 +213,8 @@ public class Mode0 {
 				out.newLine();
 
 			}
+
+			out.close();
 
 		}catch (Exception e){
 			System.err.println("Error: " + e.getMessage());
@@ -225,7 +227,7 @@ public class Mode0 {
 
 		Mode0 test = new Mode0();
 
-		ArrayList<ArrayList<Object>> tes = test.generateFPO(10, 5);
+		ArrayList<ArrayList<Object>> tes = test.generateFPO(10, 10);
 		test.generateText(tes);
 		System.out.println(tes);
 
