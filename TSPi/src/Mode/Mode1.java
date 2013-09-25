@@ -1,3 +1,4 @@
+package Mode;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -22,12 +23,12 @@ public class Mode1 {
 			while ((strLine = bufRead.readLine()) != null)   {
 				ArrayList<Character> childContainer = new ArrayList<Character>();
 				ArrayList<Object> lineContainer = new ArrayList<Object>();
-				
+
 				String[] splitStr = strLine.split(":");
 				char parent = splitStr[0].charAt(0);
-				
+
 				String[] splitChild = splitStr[1].split(",");
-				
+
 				for(int i = 0; i < splitChild.length; i++){
 					char child = splitChild[i].charAt(0);
 					childContainer.add(child);
@@ -44,7 +45,7 @@ public class Mode1 {
 
 		return result;
 	}
-	
+
 	public void addCount(ArrayList<ArrayList<Object>> count, char child){
 		if(count.size()==0){
 			ArrayList<Object> result = new ArrayList<Object>();
@@ -55,16 +56,16 @@ public class Mode1 {
 		else{
 			boolean foundChild = false;
 			for(int i = 0; i<count.size(); i++){
-				
+
 				if((Character)count.get(i).get(0)==child){
 					int tempCtr = (int) count.get(i).get(1);
 					count.get(i).remove(1);
 					count.get(i).add(tempCtr+1);
 					foundChild = true;
 				}
-				
+
 			}
-			
+
 			if(foundChild == false){
 				ArrayList<Object> result = new ArrayList<Object>();
 				result.add(child);
@@ -73,17 +74,28 @@ public class Mode1 {
 			}
 		}
 	}
-	
+
 	public ArrayList<ArrayList<Object>> generateSequenceOfValue(ArrayList<ArrayList<Object>> input){
 		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
-		
+
 		for(int i = 0; i<input.size(); i++){
 			ArrayList<Character> childContainer = (ArrayList<Character>) input.get(i).get(1);
 			for(int j = 0; j < childContainer.size(); j++){
 				this.addCount(result, childContainer.get(j));
 			}
 		}
+
+		return result;
+	}
+
+	public ArrayList<ArrayList<Object>> clone(ArrayList<ArrayList<Object>> input){
+		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
 		
+		return result;
+	}
+
+	public ArrayList<ArrayList<Object>> sort(){
+		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
 		return result;
 	}
 
