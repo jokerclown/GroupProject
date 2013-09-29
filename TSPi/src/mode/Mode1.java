@@ -59,7 +59,7 @@ public class Mode1 {
 			for(int i = 0; i<count.size(); i++){
 
 				if((Character)count.get(i).get(0)==child){
-					int tempCtr = (int) count.get(i).get(1);
+					int tempCtr = (Integer) count.get(i).get(1);
 					count.get(i).remove(1);
 					count.get(i).add(tempCtr+1);
 					foundChild = true;
@@ -102,7 +102,7 @@ public class Mode1 {
 		for(int i=0;i<dataSize;i++){
 			indexData = i;
 			for(int ctr = i;ctr<dataSize;ctr++){
-				if((int)result.get(indexData).get(1) > (int)result.get(ctr).get(1)){
+				if((Integer)result.get(indexData).get(1) > (Integer)result.get(ctr).get(1)){
 					indexData = ctr;
 				}
 			}
