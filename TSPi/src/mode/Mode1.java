@@ -1,4 +1,5 @@
-package Mode;
+package mode;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -88,14 +89,32 @@ public class Mode1 {
 		return result;
 	}
 
-	public ArrayList<ArrayList<Object>> clone(ArrayList<ArrayList<Object>> input){
+	public ArrayList<ArrayList<Object>> sort(ArrayList<ArrayList<Object>> input){
 		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
+		for(int i=0; i < input.size(); i++){
+			result.add(input.get(i));
+		}
 		
-		return result;
-	}
-
-	public ArrayList<ArrayList<Object>> sort(){
-		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
+		int dataSize = result.size();
+		int indexData = 0;
+		ArrayList<Object> tempData = new ArrayList<Object>();
+		
+		for(int i=0;i<dataSize;i++){
+			indexData = i;
+			for(int ctr = i;ctr<dataSize;ctr++){
+				if((int)result.get(indexData).get(1) > (int)result.get(ctr).get(1)){
+					indexData = ctr;
+				}
+			}
+			if(indexData != i){
+				tempData = result.get(i);
+				result.add(i, result.get(indexData));
+				result.remove(i+1);
+				result.add(indexData, tempData);
+				result.remove(indexData+1);
+			}
+		}
+		
 		return result;
 	}
 
@@ -106,6 +125,7 @@ public class Mode1 {
 		System.out.println(input);
 		ArrayList<ArrayList<Object>> sov = test.generateSequenceOfValue(input);
 		System.out.println(sov);
+		System.out.println(test.sort(sov));
 	}
 
 }

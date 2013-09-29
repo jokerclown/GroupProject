@@ -1,4 +1,5 @@
-package Mode;
+package mode;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -184,54 +185,6 @@ public class Mode0 {
 		}
 
 		return result;
-	}
-
-	public void generateText(ArrayList<ArrayList<Object>> inputFPO){
-
-		try{
-
-			FileWriter fstream = new FileWriter("textFile.txt");
-			BufferedWriter out = new BufferedWriter(fstream);
-			String oneLine = "";
-
-			for(int i = 0; i<inputFPO.size(); i++){
-
-				ArrayList<Object> focusLine = inputFPO.get(i);
-
-				oneLine = focusLine.get(0).toString() + ":";
-
-				ArrayList<Character> focusChild = (ArrayList<Character>) focusLine.get(1);
-
-				for(int j =0; j<focusChild.size(); j++){
-					oneLine = oneLine + focusChild.get(j);
-
-					if(j!=focusChild.size()-1){
-						oneLine = oneLine + ",";
-					}
-				}
-
-				out.write(oneLine);
-				out.newLine();
-
-			}
-
-			out.close();
-
-		}catch (Exception e){
-			System.err.println("Error: " + e.getMessage());
-		}
-
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		Mode0 test = new Mode0();
-
-		ArrayList<ArrayList<Object>> tes = test.generateFPO(10, 10);
-		test.generateText(tes);
-		System.out.println(tes);
-
 	}
 
 }
