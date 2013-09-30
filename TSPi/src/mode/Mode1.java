@@ -50,7 +50,21 @@ public class Mode1 {
 			}
 		}
 		
-		
+		for(int k=0; k<input.size(); k++){
+			boolean same = false;
+			char parent = input.get(k).get(0).toString().charAt(0);
+			for(int l=0; l<result.size(); l++){
+				if(parent==result.get(l).get(0).toString().charAt(0)){
+					same=true;
+				}
+			}
+			if(same == false){
+				ArrayList<Object> newInput = new ArrayList<Object>();
+				newInput.add(parent);
+				newInput.add(0);
+				result.add(newInput);
+			}
+		}
 
 		return result;
 	}
