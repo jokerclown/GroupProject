@@ -49,6 +49,8 @@ public class Mode1 {
 				this.addCount(result, childContainer.get(j));
 			}
 		}
+		
+		
 
 		return result;
 	}
