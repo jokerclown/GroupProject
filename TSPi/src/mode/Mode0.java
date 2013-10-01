@@ -170,8 +170,11 @@ public class Mode0 {
 			char parent = this.generateCharParent(availableChar, excludeParent);
 
 			lineContainer.add(parent);
+			
+			Random rand = new Random();
+			int randomNumber = rand.nextInt(lengthX);
 
-			for(int j = 0; j<lengthX; j++){
+			for(int j = 0; j<randomNumber; j++){
 
 				char child = this.generateCharChild(result, childContainer, parent);
 				childContainer.add(child);
