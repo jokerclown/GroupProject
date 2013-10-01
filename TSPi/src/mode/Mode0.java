@@ -168,6 +168,8 @@ public class Mode0 {
 			ArrayList<Character> childContainer = new ArrayList<Character>();
 
 			char parent = this.generateCharParent(availableChar, excludeParent);
+			
+			excludeParent.add(parent);
 
 			lineContainer.add(parent);
 			
