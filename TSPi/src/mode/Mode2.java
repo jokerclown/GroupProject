@@ -78,32 +78,66 @@ public class Mode2 {
 
 		return true;
 	}
+	
+	public ArrayList<ArrayList<Character>> mergeSameValue(ArrayList<ArrayList<Object>> textInput){
+		ArrayList<ArrayList<Character>> result = new ArrayList<ArrayList<Character>>();
+		ArrayList<ArrayList<Object>> textInputClone = new ArrayList<ArrayList<Object>>();
+		
+		
+		for(int i=0; i<textInput.size(); i++){
+			textInputClone.add(textInput.get(i));
+		}
+		
+		for(int j=0; j<textInputClone.size();j++){
+			ArrayList<Character> charContainer = new ArrayList<Character>();
+			charContainer.add(textInputClone.get(j).get(0).toString().charAt(0));
+			int focus = (Integer) textInputClone.get(j).get(1);
+			textInputClone.remove(j);
+			
+			for(int k=j; k<textInputClone.size();k++){
+				if(focus == (Integer) textInputClone.get(k).get(1)){
+					charContainer.add(textInputClone.get(k).get(0).toString().charAt(0));
+					textInputClone.remove(k);
+					k--;
+				}
+			}
+			j--;
+			result.add(charContainer);
+		}
+		return result;
+	}
 
 	public boolean checkSoVValid(ArrayList<ArrayList<Object>> textInputFPO, ArrayList<ArrayList<Object>> textInputSoV){
 
 		Mode1 mode1 = new Mode1();
 
 		ArrayList<ArrayList<Object>> real = mode1.generateSequenceOfValue(textInputFPO);
+		
+		if(real.size()!=textInputSoV.size()){
+			return false;
+		}
+		
+		ArrayList<ArrayList<Character>> realMerge = this.mergeSameValue(real);
+		int counter = 0;
 
-		for (int i=0; i<real.size();i++){
-			int index = -1;
-
-			char focus = real.get(i).get(0).toString().charAt(0);
-
-			for(int j=0; j<textInputSoV.size(); j++){
-				if (textInputSoV.get(j).get(0).toString().charAt(0)==focus){
-					index = j;
-				}
-			}
+		for (int i=0; i<realMerge.size();i++){
 			
-			if(index>-1){
-				if((Integer)real.get(i).get(1) != (Integer)textInputSoV.get(i).get(1)){
+			switch(realMerge.get(i).size()){
+			case 0 :
+				if(!realMerge.get(i).contains((Character)textInputSoV.get(counter).get(0))){
 					return false;
 				}
-			}else{
-				return false;
+				counter++;
+				break;
+			default:
+				for(int j=0; j<realMerge.get(i).size(); j++){
+					if(!realMerge.get(i).contains((Character)textInputSoV.get(counter).get(0))){
+						return false;
+					}
+					counter++;
+				}
+				break;
 			}
-
 		}
 
 		return true;
